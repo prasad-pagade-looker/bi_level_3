@@ -1,18 +1,12 @@
 view: brand_order_facts_ndt {
   derived_table: {
     explore_source: order_items {
-      bind_filters: {
-        from_field: order_items.created_date
-        to_field: order_items.created_date
-      }
-
       column: brand { field: products.brand }
       column: total_revenue {}
 
       derived_column: rank {
         sql: ROW_NUMBER() OVER( ORDER BY total_revenue DESC);; }
     }
-
   }
 
   dimension: brand {
@@ -45,5 +39,5 @@ view: brand_order_facts_ndt {
     sql: total_revenue ;;
     value_format_name: usd
   }
-
 }
+
