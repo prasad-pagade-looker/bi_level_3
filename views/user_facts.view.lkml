@@ -8,17 +8,13 @@ view: user_facts {
         ,MAX(order_items.created_at) AS latest_order_date -- (optional)
         FROM order_items
         GROUP BY user_id
- ;;
-  }
-
-  measure: count {
-    type: count
-    drill_fields: [detail*]
+       ;;
   }
 
   dimension: user_id {
-    primary_key: yes
     type: number
+    value_format_name: id
+    primary_key: yes
     sql: ${TABLE}.user_id ;;
   }
 
@@ -32,17 +28,41 @@ view: user_facts {
     sql: ${TABLE}.lifetime_revenue ;;
   }
 
-  dimension_group: first_order_date {
-    type: time
+  dimension: first_order_date {
+    type: date
     sql: ${TABLE}.first_order_date ;;
   }
 
-  dimension_group: latest_order_date {
-    type: time
+  dimension: latest_order_date {
+    type: date
     sql: ${TABLE}.latest_order_date ;;
   }
 
-  set: detail {
-    fields: [user_id, lifetime_order_count, lifetime_revenue, first_order_date_time, latest_order_date_time]
+  measure: count_user_facts {
+    type: count
+  }
+
+  measure: total_lifetime_order_count {
+    type: sum
+    sql: ${lifetime_order_count} ;;
+  }
+
+  measure: total_lifetime_revenue {
+    type: sum
+    sql: ${lifetime_revenue} ;;
+    value_format_name: usd
+  }
+
+  measure: min_first_order_date {
+    type: min
+    sql: ${first_order_date} ;;
+  }
+
+  measure: max_latest_order_date {
+    type: max
+    sql: ${latest_order_date} ;;
   }
 }
+
+
+

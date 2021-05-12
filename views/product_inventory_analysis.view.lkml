@@ -6,18 +6,13 @@ view: product_inventory_analysis {
       ,SUM(CASE WHEN sold_at is not null THEN cost ELSE NULL END) AS cost_of_goods_sold
       FROM public.inventory_items
       GROUP BY 1
- ;;
-  }
-
-  measure: count {
-    type: count
-    drill_fields: [detail*]
+       ;;
   }
 
   dimension: product_sku {
-    primary_key: yes
     type: string
     sql: ${TABLE}.product_sku ;;
+    primary_key: yes
   }
 
   dimension: total_cost {
@@ -32,7 +27,26 @@ view: product_inventory_analysis {
     value_format_name: usd
   }
 
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
+
+  measure: grand_total_cost {
+    type: sum
+    sql: ${total_cost} ;;
+    value_format_name: usd
+  }
+
+  measure: grand_total_cost_of_goods_sold {
+    type: sum
+    sql: ${cost_of_goods_sold} ;;
+    value_format_name: usd
+  }
+
   set: detail {
     fields: [product_sku, total_cost, cost_of_goods_sold]
   }
 }
+
+
