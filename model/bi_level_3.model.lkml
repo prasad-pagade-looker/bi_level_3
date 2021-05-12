@@ -65,6 +65,7 @@ explore: order_items {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
+  }
 
   # join: distribution_centers {
   #   view_label: "(5) Distribution Centers"
@@ -110,13 +111,15 @@ explore: order_items {
 #   }
 # }
 
-# explore: users {
-#   view_label: " Users"
-#   join: user_facts {
-#     type: left_outer
-#     sql_on: ${users.id} = ${user_facts.user_id} ;;
-#     relationship: one_to_one
-#   }
+explore: users {
+  view_label: " Users"
+  join: user_facts1 {
+    type: left_outer
+    sql_on: ${users.id} = ${user_facts1.user_id} ;;
+    relationship: one_to_one
+
+  }
+}
 
 #   join: user_retention {
 #     type: left_outer
@@ -130,4 +133,3 @@ explore: order_items {
 #     sql_on: ${users.id} = ${order_items.user_id} ;;
 #     relationship: one_to_many
 #     fields: [order_items.total_revenue]
-  }
