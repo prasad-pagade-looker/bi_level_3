@@ -72,6 +72,12 @@ explore: order_items {
     relationship: many_to_one
   }
 
+  join: top_five {
+    type: left_outer
+    sql_on: ${top_five.brand} = ${products.brand} ;;
+    relationship: many_to_one
+  }
+
   join: distribution_centers {
     view_label: "(5) Distribution Centers"
     type: left_outer
@@ -86,11 +92,11 @@ explore: order_items {
   #   relationship: many_to_one
   # }
 
-  join: brand_order_facts_ndt {
-    type: left_outer
-    sql_on: ${brand_order_facts_ndt.brand} = ${products.brand} ;;
-    relationship: many_to_one
-  }
+  # join: brand_order_facts_ndt_1 {
+  #   type: left_outer
+  #   sql_on: ${brand_order_facts_ndt_1.brand} = ${products.id};;
+  #   relationship: many_to_one
+  # }
 }
 
 explore: events {

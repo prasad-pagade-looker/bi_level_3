@@ -28,6 +28,11 @@ view: user_facts_ndt {
       type: number
     }
 
+    dimension: revenue_per_item {
+      type: number
+      value_format_name: usd
+    }
+
     measure: graand_total_revenue {
       type: sum
       sql: ${total_revenue} ;;
