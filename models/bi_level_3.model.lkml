@@ -13,6 +13,14 @@ explore: user_facts {
 
 }
 
+explore: user_facts_ndt {
+  join: users {
+    type:  left_outer
+    sql_on: ${user_facts_ndt.id} = ${users.id} ;;
+    relationship: one_to_one
+  }
+}
+
 explore: product_inventory_analysis {
   join: products {
     type: left_outer
@@ -61,4 +69,9 @@ explore: order_items {
     relationship: many_to_one
   }
 
+  join: top_five {
+    type:  left_outer
+    sql_on:  ${top_five.brand} = ${products.brand};;
+    relationship: many_to_one
+  }
 }
